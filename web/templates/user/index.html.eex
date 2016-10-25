@@ -1,3 +1,4 @@
+<div id="elm-main"></div>
 <h2>Listing users</h2>
 
 <h3>Logged in as: <%= current_user(@conn).username %></h3>
