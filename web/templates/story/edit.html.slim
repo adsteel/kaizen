@@ -1,5 +1,5 @@
 h2 Edit story
 
-= render "form.html", changeset: @changeset, action: story_path(@conn, :update, @story)
+= render "form.html", changeset: @changeset, action: story_path(@conn, :update, @story), conn: @conn
 
 = link "Back", to: story_path(@conn, :index)

@@ -1,7 +1,5 @@
 = form_for @changeset, @action, fn f ->
-  = if @changeset.action do
-    .alert.alert-danger
-      p Oops, something went wrong! Please check the errors below.
+  = render Kaizen.SharedView, "form_error_notice.html", conn: @conn, changeset: @changeset
 
   = form_select f, :type, options: ["Feature", "Bug", "Chore"]
   = form_select f, :points, options: [0, 1, 2, 3, 4, 5]
