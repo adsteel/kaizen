@@ -34,6 +34,7 @@ defmodule Kaizen.Router do
 
     get "/", UserController, :index
     resources "/users", UserController
+    resources "/stories", StoryController
   end
 
   # scope "/api", Kaizen do

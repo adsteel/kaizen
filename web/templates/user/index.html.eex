@@ -1,4 +1,3 @@
-<div id="elm-main"></div>
 <h2>Listing users</h2>
 
 <h3>Logged in as: <%= current_user(@conn).username %></h3>
@@ -29,3 +28,5 @@
 </table>
 
 <%= link "New user", to: registration_path(@conn, :new) %>
+
+<div id="elm-main"></div>

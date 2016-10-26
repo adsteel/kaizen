@@ -44,6 +44,41 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: stories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE stories (
+    id integer NOT NULL,
+    type character varying(255) NOT NULL,
+    points integer NOT NULL,
+    status character varying(255) NOT NULL,
+    creator_id integer NOT NULL,
+    description text,
+    inserted_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: stories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE stories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: stories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE stories_id_seq OWNED BY stories.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -80,6 +115,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY stories ALTER COLUMN id SET DEFAULT nextval('stories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -89,6 +131,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: stories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY stories
+    ADD CONSTRAINT stories_pkey PRIMARY KEY (id);
 
 
 --
@@ -117,5 +167,5 @@ CREATE UNIQUE INDEX users_username_index ON users USING btree (username);
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO "schema_migrations" (version) VALUES (20161020181554);
+INSERT INTO "schema_migrations" (version) VALUES (20161020181554), (20161026163021);
 

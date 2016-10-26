@@ -1,0 +1,22 @@
+h2 Show story
+
+ul
+  li
+    strong Type:&nbsp;
+    = @story.type
+  li
+    strong Points:&nbsp;
+    = @story.points
+  li
+    strong State:&nbsp;
+    = @story.state
+  li
+    strong Creator:&nbsp;
+    = @story.creator_id
+  li
+    strong Description:&nbsp;
+    = @story.description
+
+= link "Edit", to: story_path(@conn, :edit, @story)
+| &nbsp;
+= link "Back", to: story_path(@conn, :index)
