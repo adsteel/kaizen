@@ -51,6 +51,7 @@ defmodule Kaizen.Web do
 
       import Kaizen.Router.Helpers
       import Kaizen.ErrorHelpers
+      import Kaizen.Forms.InputHelpers
       import Kaizen.Gettext
     end
   end
