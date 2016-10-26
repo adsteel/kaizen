@@ -1,0 +1,14 @@
+h2 Listing users
+
+table.table
+  thead
+    tr
+      th Username
+      th Email
+  tbody
+    = for user <- @users do
+      tr
+        td= user.username
+        td= user.email
+
+= link "New user", to: registration_path(@conn, :new)
