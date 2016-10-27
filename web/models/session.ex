@@ -4,9 +4,7 @@ defmodule Kaizen.Session do
   use Kaizen.Web, :model
 
   alias Comeonin.Bcrypt
-  alias Kaizen.Session
-  alias Kaizen.Repo
-  alias Kaizen.User
+  alias Kaizen.{ Session, Repo, User }
 
   schema "sessions" do
     field :email, :string

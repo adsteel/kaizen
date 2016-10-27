@@ -1,8 +1,7 @@
 defmodule Kaizen.RegistrationControllerTest do
   use Kaizen.ConnCase
 
-  alias Kaizen.User
-  alias Kaizen.Repo
+  alias Kaizen.{ Repo, User }
 
   @valid_attrs %{email: "some content", password: "some content", password_confirmation: "some content", username: "some content"}
   @invalid_attrs %{"password" => ""}

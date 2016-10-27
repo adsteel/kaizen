@@ -1,8 +1,7 @@
 defmodule Kaizen.GuardianSerializer do
   @behaviour Guardian.Serializer
 
-  alias Kaizen.Repo
-  alias Kaizen.User
+  alias Kaizen.{ Repo, User }
 
   def for_token(user = %User{}), do: { :ok, "User:#{user.id}" }
   def for_token(_), do: { :error, "Unknown resource type" }
