@@ -1,0 +1,5 @@
+h2 New project
+
+= render "form.html", changeset: @changeset, action: project_path(@conn, :create), conn: @conn
+
+= link "Back", to: project_path(@conn, :index)

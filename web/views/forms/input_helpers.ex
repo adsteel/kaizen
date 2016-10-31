@@ -1,6 +1,10 @@
 defmodule Kaizen.Forms.InputHelpers do
   use Phoenix.HTML
 
+  def form_text_input(form, field) do
+    input_tag(form, field, :text_input, [form, field])
+  end
+
   def form_textarea(form, field) do
     input_tag(form, field, :textarea, [form, field])
   end

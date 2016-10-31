@@ -1,0 +1,6 @@
+= form_for @changeset, @action, fn f ->
+  = render Kaizen.SharedView, "form_error_notice.html", conn: @conn, changeset: @changeset
+
+  = form_text_input f, :name
+  = form_textarea f, :description
+  = form_submit "Submit"

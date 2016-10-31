@@ -32,9 +32,10 @@ defmodule Kaizen.Router do
     pipe_through :browser
     pipe_through :authenticated_browser
 
-    get "/", UserController, :index
+    get "/", ProjectController, :index
     resources "/users", UserController
     resources "/stories", StoryController
+    resources "/projects", ProjectController
   end
 
   # scope "/api", Kaizen do
