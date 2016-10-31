@@ -15,7 +15,7 @@ defmodule Kaizen.SessionControllerTest do
     insert(:user, email: @valid_attrs["email"])
     conn = post(conn, session_path(conn, :create), session: @valid_attrs)
 
-    assert redirected_to(conn) == user_path(conn, :index)
+    assert redirected_to(conn) == story_path(conn, :index)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
