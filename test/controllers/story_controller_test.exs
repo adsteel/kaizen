@@ -15,7 +15,7 @@ defmodule Kaizen.StoryControllerTest do
   end
 
   @valid_attrs %{creator_id: 42, description: "some content", points: 42, status: "some content", type: "some content"}
-  @invalid_attrs %{}
+  @invalid_attrs %{points: nil}
 
   @tag :login
   test "lists all entries on index", %{conn: conn} do
@@ -44,8 +44,8 @@ defmodule Kaizen.StoryControllerTest do
 
   @tag :login
   test "shows chosen resource", %{conn: conn} do
-    story = Repo.insert! %Story{}
-    conn = get conn, story_path(conn, :show, story)
+    story = insert(:story)
+    conn = get(conn, story_path(conn, :show, story))
     assert html_response(conn, 200) =~ "Show story"
   end
 
@@ -58,14 +58,14 @@ defmodule Kaizen.StoryControllerTest do
 
   @tag :login
   test "renders form for editing chosen resource", %{conn: conn} do
-    story = Repo.insert! %Story{}
+    story = insert(:story)
     conn = get conn, story_path(conn, :edit, story)
     assert html_response(conn, 200) =~ "Edit story"
   end
 
   @tag :login
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    story = Repo.insert! %Story{}
+    story = insert(:story)
     conn = put conn, story_path(conn, :update, story), story: @valid_attrs
     assert redirected_to(conn) == story_path(conn, :show, story)
     assert Repo.get_by(Story, @valid_attrs)
@@ -73,14 +73,14 @@ defmodule Kaizen.StoryControllerTest do
 
   @tag :login
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    story = Repo.insert! %Story{}
+    story = insert(:story)
     conn = put conn, story_path(conn, :update, story), story: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit story"
   end
 
   @tag :login
   test "deletes chosen resource", %{conn: conn} do
-    story = Repo.insert! %Story{}
+    story = insert(:story)
     conn = delete conn, story_path(conn, :delete, story)
     assert redirected_to(conn) == story_path(conn, :index)
     refute Repo.get(Story, story.id)
