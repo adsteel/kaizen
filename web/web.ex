@@ -31,9 +31,10 @@ defmodule Kaizen.Web do
       use Phoenix.Controller
 
       alias Kaizen.Repo
+
       import Ecto
       import Ecto.Query
-
+      import IEx
       import Kaizen.Router.Helpers
       import Kaizen.Gettext
     end
@@ -49,6 +50,7 @@ defmodule Kaizen.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      import IEx
       import Kaizen.Router.Helpers
       import Kaizen.ErrorHelpers
       import Kaizen.Forms.InputHelpers

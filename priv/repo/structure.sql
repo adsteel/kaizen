@@ -144,6 +144,38 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
+-- Name: users_projects; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE users_projects (
+    id integer NOT NULL,
+    user_id integer,
+    project_id integer,
+    inserted_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: users_projects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE users_projects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: users_projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE users_projects_id_seq OWNED BY users_projects.id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -162,6 +194,13 @@ ALTER TABLE ONLY stories ALTER COLUMN id SET DEFAULT nextval('stories_id_seq'::r
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users_projects ALTER COLUMN id SET DEFAULT nextval('users_projects_id_seq'::regclass);
 
 
 --
@@ -197,10 +236,25 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: users_projects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users_projects
+    ADD CONSTRAINT users_projects_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users_email_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX users_email_index ON users USING btree (email);
+
+
+--
+-- Name: users_projects_user_id_project_id_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX users_projects_user_id_project_id_index ON users_projects USING btree (user_id, project_id);
 
 
 --
@@ -214,5 +268,5 @@ CREATE UNIQUE INDEX users_username_index ON users USING btree (username);
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO "schema_migrations" (version) VALUES (20161020181554), (20161026163021), (20161031212602);
+INSERT INTO "schema_migrations" (version) VALUES (20161020181554), (20161026163021), (20161031212602), (20161031221632);
 
