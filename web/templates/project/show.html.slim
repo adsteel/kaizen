@@ -6,7 +6,21 @@
 
 h2= @project.name
 
-= @project.description
+.panel
+  = @project.description
+
+.stories
+  = for story <- @project.stories do
+    .story.panel
+      .description Description: #{story.description}
+      .status Status: #{story.status}
+      .points Points: #{story.points}
+      .type Type: #{story.type}
+      .username Created by: #{story.creator.username}
+      .actions= link "Delete", to: project_story_path(@conn, :delete, @project, story), method: :delete
+
+.new-story
+  = render Kaizen.Project.StoryView, "new.html", changeset: @story_changeset, action: project_story_path(@conn, :create, @project), conn: @conn
 
 .actions
   = link "members", to: project_user_project_path(@conn, :index, @project)

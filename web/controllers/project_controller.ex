@@ -1,7 +1,7 @@
 defmodule Kaizen.ProjectController do
   use Kaizen.Web, :controller
 
-  alias Kaizen.{ Project, UserProject, User }
+  alias Kaizen.{ Project, UserProject, User, Story }
 
   def index(conn, _params) do
     projects = Repo.all(Project)
@@ -27,9 +27,10 @@ defmodule Kaizen.ProjectController do
   end
 
   def show(conn, %{"id" => id}) do
-    project = Repo.get!(Project, id) |> Repo.preload(:users)
+    project = Repo.get!(Project, id) |> Repo.preload(:stories) |> Repo.preload(:creators)
+    story_changeset = Story.changeset(%Story{}, %{})
 
-    render(conn, "show.html", project: project)
+    render(conn, "show.html", project: project, story_changeset: story_changeset)
   end
 
   def edit(conn, %{"id" => id}) do

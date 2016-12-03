@@ -87,7 +87,8 @@ CREATE TABLE stories (
     creator_id integer NOT NULL,
     description text,
     inserted_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    project_id integer NOT NULL
 );
 
 
@@ -268,5 +269,5 @@ CREATE UNIQUE INDEX users_username_index ON users USING btree (username);
 -- PostgreSQL database dump complete
 --
 
-INSERT INTO "schema_migrations" (version) VALUES (20161020181554), (20161026163021), (20161031212602), (20161031221632);
+INSERT INTO "schema_migrations" (version) VALUES (20161020181554), (20161026163021), (20161031212602), (20161031221632), (20161203173829);
 

@@ -1,12 +1,16 @@
 defmodule Kaizen.Story do
   use Kaizen.Web, :model
 
+  alias Kaizen.{ Project, User }
+
   schema "stories" do
     field :type, :string
     field :points, :integer
     field :status, :string
-    field :creator_id, :integer
     field :description, :string
+
+    belongs_to :creator, User
+    belongs_to :project, Project
 
     timestamps()
   end
@@ -17,6 +21,6 @@ defmodule Kaizen.Story do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:type, :points, :status, :creator_id, :description])
-    |> validate_required([:type, :points, :status, :creator_id])
+    |> validate_required([:type, :points, :status, :creator_id, :project_id])
   end
 end
