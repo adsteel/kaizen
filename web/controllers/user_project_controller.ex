@@ -3,6 +3,24 @@ defmodule Kaizen.UserProjectController do
 
   alias Kaizen.{ Project, ProjectView, UserProject, User }
 
+  def index(conn, %{"project_id" => project_id}) do
+    project = Repo.get!(Project, project_id) |> Repo.preload(:users)
+    changeset = UserProject.changeset(%UserProject{}, %{})
+    users = Repo.all(
+      from(u in User,
+        left_join: up in assoc(u, :user_projects),
+        where: up.project_id != ^project.id or is_nil(up.project_id),
+        select: {u.username, u.id})
+    )
+    user_projects = Repo.all(
+      from up in UserProject,
+        where: up.project_id == ^project.id,
+        select: up
+    ) |> Repo.preload(:user)
+
+    render(conn, "index.html", changeset: changeset, users: users, user_projects: user_projects, project: project)
+  end
+
   def create(conn, %{"user_project" => user_project_params, "project_id" => project_id}) do
     up_params = Map.put(user_project_params, "project_id", project_id)
     changeset = UserProject.changeset(%UserProject{}, up_params)
@@ -23,7 +41,7 @@ defmodule Kaizen.UserProjectController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "User successfully added to project.")
-        |> redirect(to: project_path(conn, :show, project))
+        |> redirect(to: project_user_project_path(conn, :index, project))
       {:error, changeset} ->
         render(conn, ProjectView, "show.html", changeset: changeset, project: project, users: users, user_projects: user_projects)
     end
@@ -38,6 +56,6 @@ defmodule Kaizen.UserProjectController do
 
     conn
     |> put_flash(:info, "Project user deleted successfully.")
-    |> redirect(to: project_path(conn, :show, user_project.project))
+    |> redirect(to: project_user_project_path(conn, :index, user_project.project))
   end
 end

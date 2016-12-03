@@ -17,7 +17,7 @@ defmodule Kaizen.SessionController do
          conn
          |> Guardian.Plug.sign_in(user)
          |> put_flash(:info, "Welcome, #{user.username}")
-         |> redirect(to: story_path(conn, :index))
+         |> redirect(to: project_path(conn, :index))
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Invalid credentials.")

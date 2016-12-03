@@ -1,0 +1,14 @@
+.breadcrumbs
+  = link("Projects", to: project_path(@conn, :index))
+  |  > 
+  = link(@project.name , to: project_path(@conn, :show, @project))
+  |  > Members
+
+= form_for @changeset, project_user_project_path(@conn, :create, @project), fn f ->
+  = render Kaizen.SharedView, "form_error_notice.html", conn: @conn, changeset: @changeset
+  = form_select f, :user_id, options: @users
+  = form_submit "Add"
+
+= for up <- @user_projects do
+  = up.user.username
+  = link " remove", to: user_project_path(@conn, :delete, up), method: :delete

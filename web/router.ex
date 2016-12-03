@@ -36,7 +36,7 @@ defmodule Kaizen.Router do
     resources "/users", UserController
     resources "/stories", StoryController
     resources "/projects", ProjectController do
-      resources "/user_projects", UserProjectController, only: [:create]
+      resources "/user_projects", UserProjectController, only: [:create, :index]
     end
     resources "/user_projects", UserProjectController, only: [:delete]
   end
