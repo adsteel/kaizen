@@ -13,6 +13,7 @@ defmodule Kaizen.Router do
     plug Guardian.Plug.VerifySession
     plug Guardian.Plug.LoadResource
     plug Guardian.Plug.EnsureAuthenticated, handler: Kaizen.AuthErrorHandler
+    plug Kaizen.Plug.Auth, repo: Kaizen.Repo
   end
 
   pipeline :api do
