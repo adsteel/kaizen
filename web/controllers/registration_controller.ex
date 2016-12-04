@@ -7,18 +7,17 @@ defmodule Kaizen.RegistrationController do
   alias Kaizen.User
 
   def new(conn, _params) do
-    render(conn, "new.html", changeset: User.changeset(%User{}))
+    render(conn, "new.html", changeset: User.registration_changeset(%User{}))
   end
 
   def create(conn, %{"user" => user_params}) do
-    encrypted_params = Map.merge(user_params, %{"password" => Bcrypt.hashpwsalt(user_params["password"])})
-    changeset = User.changeset(%User{}, encrypted_params)
+    changeset = User.registration_changeset(%User{}, user_params)
 
     case Repo.insert(changeset) do
-      {:ok, _user} ->
+      {:ok, user} ->
         conn
-        |> put_flash(:info, "Welcome new user.")
-        |> redirect(to: user_path(conn, :index))
+        |> put_flash(:info, "Successfully registered #{user.username}.")
+        |> redirect(to: project_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
