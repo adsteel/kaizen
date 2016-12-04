@@ -1,5 +1,3 @@
-require IEx
-
 defmodule Kaizen.Session do
   use Kaizen.Web, :model
 

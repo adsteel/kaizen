@@ -1,5 +1,3 @@
-require IEx
-
 defmodule Kaizen.RegistrationController do
   use Kaizen.Web, :controller
 

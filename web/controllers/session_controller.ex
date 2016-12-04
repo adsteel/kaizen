@@ -1,5 +1,3 @@
-require IEx
-
 defmodule Kaizen.SessionController do
   use Kaizen.Web, :controller
 

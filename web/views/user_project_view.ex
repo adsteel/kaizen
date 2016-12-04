@@ -1,5 +1,3 @@
-require IEx
-
 defmodule Kaizen.UserProjectView do
   use Kaizen.Web, :view
 

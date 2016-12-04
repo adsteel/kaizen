@@ -34,7 +34,7 @@ defmodule Kaizen.Web do
 
       import Ecto
       import Ecto.Query
-      import IEx
+      import IEx, only: [pry: 0]
       import Kaizen.Router.Helpers
       import Kaizen.Gettext
     end
@@ -50,7 +50,7 @@ defmodule Kaizen.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import IEx
+      import IEx, only: [pry: 0]
       import Kaizen.Router.Helpers
       import Kaizen.ErrorHelpers
       import Kaizen.Forms.InputHelpers

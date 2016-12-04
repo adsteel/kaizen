@@ -1,5 +1,3 @@
-require IEx
-
 defmodule Kaizen.Forms.InputHelpersTest do
   import Kaizen.Forms.InputHelpers
 
