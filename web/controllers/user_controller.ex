@@ -8,4 +8,8 @@ defmodule Kaizen.UserController do
 
     render(conn, "index.html", users: users)
   end
+
+  def articles(conn, _params) do
+    render(conn, "articles.json")
+  end
 end

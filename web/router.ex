@@ -17,7 +17,7 @@ defmodule Kaizen.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["html"]
   end
 
   scope "/", Kaizen do
@@ -42,7 +42,9 @@ defmodule Kaizen.Router do
     resources "/user_projects", UserProjectController, only: [:delete]
   end
 
-  # scope "/api", Kaizen do
-  #   pipe_through :api
-  # end
+  scope "/api", Kaizen do
+    pipe_through :api
+
+    get "/articles", UserController, :articles
+  end
 end

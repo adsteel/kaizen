@@ -1,40 +1,57 @@
 module Kaizen exposing (..)
 
 import Html exposing (..)
-import Html.App as App
+import Html.Attributes exposing(class)
+import Html.App
 import Html.Events exposing (onClick)
+import Components.ArticleList as ArticleList
 
-main = App.beginnerProgram { model = model, view = view, update = update }
+main : Program Never
+main =
+  Html.App.program
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
+
 
 -- MODEL
 
-type alias Model = Int
+type alias Model =
+  { articleListModel: ArticleList.Model }
 
-model : Model
-model =
-  0
+initialModel : Model
+initialModel =
+  { articleListModel = ArticleList.initialModel }
+
+init : (Model, Cmd Msg)
+init =
+  ( initialModel, Cmd.none )
+
 
 -- UPDATE
 
-type Msg = Increment | Decrement | Reset
+type Msg
+  = ArticleListMsg ArticleList.Msg
 
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    Increment ->
-      model + 1
-    Decrement ->
-      model - 1
-    Reset ->
-      0
+    ArticleListMsg articleMsg ->
+      let (updatedModel, cmd) = ArticleList.update articleMsg model.articleListModel
+      in ( { model | articleListModel = updatedModel }, Cmd.map ArticleListMsg cmd )
+
+
+-- SUBSCRIPTIONS
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  Sub.none
+
 
 -- VIEW
 view : Model -> Html Msg
 view model =
-  div []
-  [ button [ onClick Decrement ] [ text "-" ]
-  , div [] [ text (toString model) ]
-  , button [ onClick Increment ] [ text "+"]
-  , br [] []
-  , button [ onClick Reset ] [ text "Reset"]
-  ]
-
+  div [ class "elm-app" ]
+    [ Html.App.map ArticleListMsg (ArticleList.view model.articleListModel) ]
