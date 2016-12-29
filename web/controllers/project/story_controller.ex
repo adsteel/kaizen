@@ -3,6 +3,12 @@ defmodule Kaizen.Project.StoryController do
 
   alias Kaizen.{ Project, Story }
 
+  def index(conn, %{"project_id" => project_id}) do
+    project = Repo.get!(Project, project_id) |> Repo.preload(:stories) |> Repo.preload(:creators)
+
+    render(conn, "index.json", stories: project.stories)
+  end
+
   def create(conn, %{"project_id" => project_id, "story" => story_params}) do
     project = Repo.get!(Project, project_id)
     story_changeset = Story.changeset(%Story{status: "unstarted", creator_id: Guardian.Plug.current_resource(conn).id, project_id: project.id}, story_params)

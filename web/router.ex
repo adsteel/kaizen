@@ -45,6 +45,8 @@ defmodule Kaizen.Router do
   scope "/api", Kaizen do
     pipe_through :api
 
-    get "/articles", UserController, :articles
+    resources "/projects", ProjectController, only: [] do
+      resources "/stories", Project.StoryController, only: [:index]
+    end
   end
 end

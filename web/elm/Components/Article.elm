@@ -1,14 +1,22 @@
 module Article exposing (view, Model)
 
-import Html exposing (Html, span, strong, em, a, text, li)
-import Html.Attributes exposing (class, href)
+import Html exposing (Html, span, strong, a, text, div, button)
+import Html.Attributes exposing (class, href, method)
 
-type alias Model = { title : String, url : String, postedBy : String, postedOn : String }
+type alias Model =
+  { creator : String,
+    description : String,
+    id : String,
+    status : String,
+    story_type : String
+  }
 
 view : Model -> Html a
 view model =
   span [ class "article" ]
-    [a [ href model.url ] [ strong [] [ text (model.title ++ " - ") ] ]
-    , span [] [ text ("Posted by: " ++ model.postedBy) ]
-    , em [] [ text (" (posted on: " ++ model.postedOn ++ ") ")]
+    [ div [] [ text ("Status: " ++ model.status) ]
+    , div [] [ text ("Description: " ++ model.description ) ]
+    , div [] [ text ("Created by: " ++ model.creator ) ]
+    , div [] [ text ("Type: " ++ model.story_type ) ]
+    , a [ href "#", class "delete" ] [ text "delete" ]
     ]

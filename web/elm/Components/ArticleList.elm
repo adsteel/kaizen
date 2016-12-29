@@ -19,22 +19,14 @@ initialModel : Model
 initialModel =
   { articles = [] }
 
-articles : Model
-articles =
-  { articles =
-    [ { title = "Article 1", url = "http://google.com", postedBy = "Author 1", postedOn = "06/21/16" }
-    , { title = "Article 2", url = "http://google.com", postedBy = "Author 2", postedOn = "06/22/16" }
-    , { title = "Article 3", url = "http://google.com", postedBy = "Author 3", postedOn = "06/23/16" } ]
-  }
-
 
 -- VIEW
 
 view : Model -> Html Msg
 view model =
-  div [ class "article-list" ]
-    [ h2 [] [ text "Article List" ]
-    , button [ onClick Fetch, class "btn btn-primary" ] [ text "Fetch Articles" ]
+  div [ class "story-list" ]
+    [ h2 [] [ text "Stories" ]
+    , button [ onClick Fetch, class "btn btn-primary" ] [ text "Fetch Stories" ]
     , ul [] (renderArticles model) ]
 
 renderArticle : Article.Model -> Html a
@@ -77,7 +69,7 @@ update msg model =
 fetchArticles : Cmd Msg
 fetchArticles =
   let
-    url = "/api/articles"
+    url = "/api/projects/1/stories"
   in
     Task.perform FetchFail FetchSucceed (Http.get decodeArticleFetch url)
 
@@ -91,8 +83,9 @@ decodeArticleList =
 
 decodeArticleData : Json.Decoder Article.Model
 decodeArticleData =
-  Json.object4 Article.Model
-    ("title" := Json.string)
-    ("url" := Json.string)
-    ("postedBy" := Json.string)
-    ("postedOn" := Json.string)
+  Json.object5 Article.Model
+    ("creator" := Json.string)
+    ("description" := Json.string)
+    ("id" := Json.string)
+    ("status" := Json.string)
+    ("story_type" := Json.string)
