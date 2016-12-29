@@ -3,7 +3,6 @@ module Kaizen exposing (..)
 import Html exposing (..)
 import Html.App as App
 import Html.Events exposing (onClick)
-import Components.ArticleList as ArticleList
 
 main = App.beginnerProgram { model = model, view = view, update = update }
 
@@ -38,6 +37,5 @@ view model =
   , button [ onClick Increment ] [ text "+"]
   , br [] []
   , button [ onClick Reset ] [ text "Reset"]
-  , ArticleList.view
   ]
 

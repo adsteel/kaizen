@@ -1,6 +1,6 @@
-module Components.ArticleList exposing (..)
+module Components.StoryList exposing (..)
 
-import Article
+import Story
 import Debug
 import Html exposing (Html, text, ul, li, div, h2, button)
 import Html.Attributes exposing (class)
@@ -13,11 +13,11 @@ import Task
 -- MODEL
 
 type alias Model =
-  { articles : List Article.Model }
+  { stories : List Story.Model }
 
 initialModel : Model
 initialModel =
-  { articles = [] }
+  { stories = [] }
 
 
 -- VIEW
@@ -27,15 +27,15 @@ view model =
   div [ class "story-list" ]
     [ h2 [] [ text "Stories" ]
     , button [ onClick Fetch, class "btn btn-primary" ] [ text "Fetch Stories" ]
-    , ul [] (renderArticles model) ]
+    , ul [] (renderStories model) ]
 
-renderArticle : Article.Model -> Html a
-renderArticle article =
-  li [] [ Article.view article ]
+renderStory : Story.Model -> Html a
+renderStory story =
+  li [] [ Story.view story ]
 
-renderArticles : Model -> List (Html a)
-renderArticles model =
-  List.map renderArticle model.articles
+renderStories : Model -> List (Html a)
+renderStories model =
+  List.map renderStory model.stories
 
 
 -- UPDATE
@@ -43,7 +43,7 @@ renderArticles model =
 type Msg
   = NoOp
   | Fetch
-  | FetchSucceed (List Article.Model)
+  | FetchSucceed (List Story.Model)
   | FetchFail Http.Error
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -52,9 +52,9 @@ update msg model =
     NoOp ->
       (model, Cmd.none)
     Fetch ->
-      (model, fetchArticles)
-    FetchSucceed articleList ->
-      (Model articleList, Cmd.none)
+      (model, fetchStorys)
+    FetchSucceed storyList ->
+      (Model storyList, Cmd.none)
     FetchFail error ->
       case error of
         Http.UnexpectedPayload errorMessage ->
@@ -66,24 +66,24 @@ update msg model =
 
 -- HTTP calls
 
-fetchArticles : Cmd Msg
-fetchArticles =
+fetchStorys : Cmd Msg
+fetchStorys =
   let
     url = "/api/projects/1/stories"
   in
-    Task.perform FetchFail FetchSucceed (Http.get decodeArticleFetch url)
+    Task.perform FetchFail FetchSucceed (Http.get decodeStoryFetch url)
 
-decodeArticleFetch : Json.Decoder (List Article.Model)
-decodeArticleFetch =
-  Json.at ["data"] decodeArticleList
+decodeStoryFetch : Json.Decoder (List Story.Model)
+decodeStoryFetch =
+  Json.at ["data"] decodeStoryList
 
-decodeArticleList : Json.Decoder (List Article.Model)
-decodeArticleList =
-  Json.list decodeArticleData
+decodeStoryList : Json.Decoder (List Story.Model)
+decodeStoryList =
+  Json.list decodeStoryData
 
-decodeArticleData : Json.Decoder Article.Model
-decodeArticleData =
-  Json.object5 Article.Model
+decodeStoryData : Json.Decoder Story.Model
+decodeStoryData =
+  Json.object5 Story.Model
     ("creator" := Json.string)
     ("description" := Json.string)
     ("id" := Json.string)

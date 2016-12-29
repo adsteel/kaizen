@@ -1,4 +1,4 @@
-module Article exposing (view, Model)
+module Story exposing (view, Model)
 
 import Html exposing (Html, span, strong, a, text, div, button)
 import Html.Attributes exposing (class, href, method)
@@ -13,7 +13,7 @@ type alias Model =
 
 view : Model -> Html a
 view model =
-  span [ class "article" ]
+  span [ class "story" ]
     [ div [] [ text ("Status: " ++ model.status) ]
     , div [] [ text ("Description: " ++ model.description ) ]
     , div [] [ text ("Created by: " ++ model.creator ) ]

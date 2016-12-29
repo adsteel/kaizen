@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing(class)
 import Html.App
 import Html.Events exposing (onClick)
-import Components.ArticleList as ArticleList
+import Components.StoryList as StoryList
 
 main : Program Never
 main =
@@ -19,11 +19,11 @@ main =
 -- MODEL
 
 type alias Model =
-  { articleListModel: ArticleList.Model }
+  { storyListModel: StoryList.Model }
 
 initialModel : Model
 initialModel =
-  { articleListModel = ArticleList.initialModel }
+  { storyListModel = StoryList.initialModel }
 
 init : (Model, Cmd Msg)
 init =
@@ -33,14 +33,14 @@ init =
 -- UPDATE
 
 type Msg
-  = ArticleListMsg ArticleList.Msg
+  = StoryListMsg StoryList.Msg
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    ArticleListMsg articleMsg ->
-      let (updatedModel, cmd) = ArticleList.update articleMsg model.articleListModel
-      in ( { model | articleListModel = updatedModel }, Cmd.map ArticleListMsg cmd )
+    StoryListMsg storyMsg ->
+      let (updatedModel, cmd) = StoryList.update storyMsg model.storyListModel
+      in ( { model | storyListModel = updatedModel }, Cmd.map StoryListMsg cmd )
 
 
 -- SUBSCRIPTIONS
@@ -54,4 +54,4 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div [ class "elm-app" ]
-    [ Html.App.map ArticleListMsg (ArticleList.view model.articleListModel) ]
+    [ Html.App.map StoryListMsg (StoryList.view model.storyListModel) ]
