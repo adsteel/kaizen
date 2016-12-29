@@ -5,10 +5,11 @@ import Html.Attributes exposing(class)
 import Html.App
 import Html.Events exposing (onClick)
 import Components.StoryList as StoryList
+import Json.Decode exposing ((:=))
 
-main : Program Never
+main : Program Flags
 main =
-  Html.App.program
+  Html.App.programWithFlags
     { init = init
     , view = view
     , update = update
@@ -19,15 +20,27 @@ main =
 -- MODEL
 
 type alias Model =
-  { storyListModel: StoryList.Model }
+  { storyListModel: StoryList.Model
+  , currentUser: User
+  }
+
+type alias User = { username : String }
+
+type alias Flags =
+  { currentUser : User }
 
 initialModel : Model
 initialModel =
-  { storyListModel = StoryList.initialModel }
+  { storyListModel = StoryList.initialModel, currentUser = { username = "" } }
 
-init : (Model, Cmd Msg)
-init =
-  ( initialModel, Cmd.none )
+init : Flags -> (Model, Cmd Msg)
+init flags =
+  ( { storyListModel = StoryList.initialModel
+    , currentUser = flags.currentUser
+    }, Cmd.none )
+
+decodeUser user =
+  Json.Decode.decodeString user
 
 
 -- UPDATE
@@ -54,4 +67,7 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
   div [ class "elm-app" ]
-    [ Html.App.map StoryListMsg (StoryList.view model.storyListModel) ]
+    [
+      div [ class "hello" ] [ text model.currentUser.username ]
+    , Html.App.map StoryListMsg (StoryList.view model.storyListModel)
+    ]

@@ -21,4 +21,4 @@ import "phoenix_html"
 // import socket from "./socket"
 
 const elmDiv = document.getElementById('elm-main')
-    , elmApp = Elm.Kaizen.embed(elmDiv)
+    , elmApp = Elm.Kaizen.embed(elmDiv, { currentUser: window.globalData.currentUser })

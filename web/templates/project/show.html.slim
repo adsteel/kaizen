@@ -12,6 +12,10 @@ h4= @current_user.username
 
 #elm-main
 
+javascript:
+  window.globalData = {}
+  window.globalData.currentUser = { username: "a string" }
+
 .new-story
   = render Kaizen.Project.StoryView, "new.html", changeset: @story_changeset, action: project_story_path(@conn, :create, @project), conn: @conn
 
