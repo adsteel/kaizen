@@ -52,7 +52,7 @@ update msg model =
     NoOp ->
       (model, Cmd.none)
     Fetch ->
-      (model, fetchStorys)
+      (model, fetchStories)
     FetchSucceed storyList ->
       (Model storyList, Cmd.none)
     FetchFail error ->
@@ -66,8 +66,8 @@ update msg model =
 
 -- HTTP calls
 
-fetchStorys : Cmd Msg
-fetchStorys =
+fetchStories : Cmd Msg
+fetchStories =
   let
     url = "/api/projects/1/stories"
   in
