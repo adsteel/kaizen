@@ -37,7 +37,7 @@ init : Flags -> (Model, Cmd Msg)
 init flags =
   ( { storyListModel = StoryList.initialModel
     , currentUser = flags.currentUser
-    }, Cmd.none )
+    }, Cmd.map StoryListMsg StoryList.fetchStories )
 
 decodeUser user =
   Json.Decode.decodeString user
